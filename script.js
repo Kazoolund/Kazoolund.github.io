@@ -17,10 +17,10 @@ function chess_board(stop){
     for(i = 0; i < stop; i++){
         for(j = 0; j < stop; j++){
             if((j + i) % 2 == 1){
-                output += "█";
+                output += "██";
             }
             else{
-                output += " ";
+                output += "  ";
             }
         }
         output += "\n";
