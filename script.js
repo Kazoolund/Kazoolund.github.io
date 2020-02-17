@@ -3,6 +3,9 @@
 window.addEventListener("DOMContentLoaded", (e) => {
     let button = document.getElementById("MakeChessboard");
     button.addEventListener("click", make_board);
+    let size = document.getElementById("ChessboardSize");
+    size.addEventListener("change", make_board);
+    
 });
 
 function make_board(){
