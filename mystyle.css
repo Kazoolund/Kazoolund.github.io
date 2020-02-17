@@ -1,3 +1,8 @@
 body{
     background-color: rebeccapurple;
 }
+
+#Chessboard{
+    width: max-content;
+    box-shadow: 0px 0px 10px white;
+}
