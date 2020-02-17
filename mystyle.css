@@ -3,7 +3,7 @@ body{
 }
 
 #Chessboard{
-    background-color: white;
+    background: linear-gradient(to bottom right, red, orange, yellow, lightgreen, blue, darkblue, purple);
     margin: auto;
     width: max-content;
     box-shadow: 0px 0px 10px white;
