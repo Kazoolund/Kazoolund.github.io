@@ -15,12 +15,15 @@ function chess_board(stop){
     let output = "";
     let board = document.getElementById("Chessboard");
     for(i = 0; i < stop; i++){
-        if(i % 2 == 1){
-            output += "█ █ █ █\n";
+        for(j = 0; j < stop; j++){
+            if((j + i) % 2 == 1){
+                output += "█";
+            }
+            else{
+                output += " ";
+            }
         }
-        else{
-            output += " █ █ █ █\n";
-        }
+        output += "\n";
     }
     board.textContent = output;
 }
