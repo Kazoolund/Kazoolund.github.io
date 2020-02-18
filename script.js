@@ -25,7 +25,7 @@ function balloon(event){
     }
     if(BalloonSize > 200){
         window.removeEventListener("keydown", balloon)
-        Balloon.textContent = "Hej So!" //"💥";
+        Balloon.textContent = "💥";
     }
     
 }
