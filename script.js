@@ -2,7 +2,6 @@
 
 window.addEventListener("DOMContentLoaded", addEventListeners);
 
-let BalloonSize = 13;
 
 function addEventListeners(){
     let button = document.getElementById("MakeChessboard");
@@ -12,45 +11,61 @@ function addEventListeners(){
     window.addEventListener("keydown", balloon);
 }
 
-function balloon(event){
-    let Balloon = document.getElementById("Balloon");
-    console.log("heY")
-    if(event.key == "ArrowUp"){
-        Balloon.style.fontSize = `${BalloonSize}px`;
-        BalloonSize = Math.floor(BalloonSize * 1.1);
-    }
-    else if(event.key == "ArrowDown"){
-        Balloon.style.fontSize = `${BalloonSize}px`;
-        BalloonSize = Math.floor(BalloonSize * 0.9);
-    }
-    if(BalloonSize > 200){
-        window.removeEventListener("keydown", balloon)
-        Balloon.textContent = "💥";
-    }
-    
-}
-
 function make_board(){
     let size = document.getElementById("ChessboardSize");
-    if (size == 8){
-        fox_n_hound_game(size.value);
+    if (size.value == 8){
+        real_chess(size.value);
     }
     else{
         chess_board(size.value);
     }
 }
 
-function fox_n_hound_game(){
-    let fox = document.getElementById("Fox");
-    let hound = document.getElementById("Hound");
+function id_to_position(id_string){
+    return {
+        
+        x: parseInt(id_string[5]),
+        y: parseInt(id_string[7]),
+    };
 }
 
+function position_to_id(position){
+    return `cell-${position.x}-${position.y}`;
+}
+
+function real_chess(){
+    let output = 0;
+    let i;
+    let j;
+    let board = document.getElementById("Chessboard");
+    board.innerHTML = "";
+    for(i = 0; i <= 7; i++){
+        let boardLine = document.createElement("div");
+        for(j = 0; j <= 7; j++){
+            let div = document.createElement("div");
+            div.id = position_to_id({x: j, y: i});
+            if ((i + j) % 2 == 1){
+                div.style.backgroundColor = 'black';
+            }
+            else{
+                div.style.backgroundColor = 'white';
+            }
+            div.className = "cell";
+            boardLine.appendChild(div);
+
+        }
+        
+        boardLine.className = "boardLine";
+        board.appendChild(boardLine);
+    }
+}
 
 function chess_board(stop){
     let output = "";
     let i;
     let j;
     let board = document.getElementById("Chessboard");
+    let pre = document.createElement("pre");
     for(i = 0; i < stop; i++){
         for(j = 0; j < stop; j++){
             if((j + i) % 2 == 1){
@@ -62,5 +77,9 @@ function chess_board(stop){
         }
         output += "\n";
     }
-    board.textContent = output;
+    pre.textContent = output;
+    board.innerHTML = "";
+
+    board.appendChild(pre);
+    console.log("ey");
 }

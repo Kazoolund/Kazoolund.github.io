@@ -1,15 +1,35 @@
 body{
-    background-color: rebeccapurple;
+    background-color: white;
 }
 
 p{
     color: white;
     text-shadow: 0px 0px 10px black;
 }
+h1{
+    size: 10px 10px;
+}
+
+pre{
+    margin: 0px;
+}
 
 #Chessboard{
-    background: linear-gradient(to bottom right, red, orange, yellow, lightgreen, blue, darkblue, purple);
-    margin: auto;
-    width: max-content;
+    /* background: linear-gradient(to bottom right, red, orange, yellow, lightgreen, blue, darkblue, purple); */
     box-shadow: 0px 0px 10px white;
+    margin: auto;
+    max-width: max-content;
+    border: 2px solid black;
+}
+
+.cell{
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+
+.boardLine{
+    max-width: max-content;
+    height: 50px;
+    display: block;
 }
