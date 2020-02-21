@@ -25,11 +25,13 @@ pre{
 .cell{
     width: 50px;
     height: 50px;
-    display: inline-block;
+    display: inline-flex;
+    
 }
 
 .boardLine{
     max-width: max-content;
     height: 50px;
     display: block;
+    vertical-align: top;
 }

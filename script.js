@@ -8,8 +8,8 @@ function addEventListeners(){
     button.addEventListener("click", make_board);
     let size = document.getElementById("ChessboardSize");
     size.addEventListener("change", make_board);
-    window.addEventListener("keydown", balloon);
 }
+
 
 function make_board(){
     let size = document.getElementById("ChessboardSize");
@@ -21,9 +21,10 @@ function make_board(){
     }
 }
 
+
+
 function id_to_position(id_string){
     return {
-        
         x: parseInt(id_string[5]),
         y: parseInt(id_string[7]),
     };
@@ -45,7 +46,7 @@ function real_chess(){
             let div = document.createElement("div");
             div.id = position_to_id({x: j, y: i});
             if ((i + j) % 2 == 1){
-                div.style.backgroundColor = 'black';
+                div.style.backgroundColor = 'grey';
             }
             else{
                 div.style.backgroundColor = 'white';
@@ -58,6 +59,12 @@ function real_chess(){
         boardLine.className = "boardLine";
         board.appendChild(boardLine);
     }
+    let cell = get_cell({x: 1, y: 2});
+    cell.textContent = "♔";
+}
+
+function get_cell(position){
+    return document.getElementById(position_to_id(position));
 }
 
 function chess_board(stop){
