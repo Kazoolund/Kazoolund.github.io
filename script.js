@@ -11,6 +11,47 @@ function addEventListeners(){
 }
 
 
+class Piece{
+    constructor(icon) {
+        this.name = "Piece";
+        this.icon = "";
+    }
+}
+
+class King{
+    constructor(){
+        this.name = "King";
+        this.icon = "♚";
+        this.x = 4;
+        this.y = 7;
+        this.startposition = get_cell({x: 4, y: 7});
+        console.log(this.startposition);
+        let chessButton = document.getElementById("ChessButton");
+        chessButton.addEventListener("click", () => this.king_move_forward());
+    }
+    king_move_forward(){
+        console.log("ehje");
+        this.y = this.y - 1;
+        this.startposition.textContent = "";
+        this.startposition = get_cell({x: this.x, y: this.y});
+        this.startposition.textContent = "♚";
+    }
+    king_move_backwards(){
+        this.startposition.y = this.startposition.y + 1;
+        this.startposition.textContent = "♚";
+    }
+    king_move_left(){
+        this.startposition.x = this.startposition.x - 1;
+        this.startposition.textContent = "♚";
+    }
+    king_move_right(){
+        this.startposition.x = this.startposition.x + 1;
+        this.startposition.textContent = "♚";
+    }
+}
+
+let myking = undefined;
+
 function make_board(){
     let size = document.getElementById("ChessboardSize");
     if (size.value == 8){
@@ -20,8 +61,6 @@ function make_board(){
         chess_board(size.value);
     }
 }
-
-
 
 function id_to_position(id_string){
     return {
@@ -35,6 +74,7 @@ function position_to_id(position){
 }
 
 function real_chess(){
+
     let output = 0;
     let i;
     let j;
@@ -59,9 +99,14 @@ function real_chess(){
         boardLine.className = "boardLine";
         board.appendChild(boardLine);
     }
-    let cell = get_cell({x: 1, y: 2});
-    cell.textContent = "♔";
+    
+    myking = new King();
+    let cell = myking.startposition;
+    console.log(cell);
+    cell.textContent = "♚";
 }
+
+function move(position){}
 
 function get_cell(position){
     return document.getElementById(position_to_id(position));
@@ -88,5 +133,4 @@ function chess_board(stop){
     board.innerHTML = "";
 
     board.appendChild(pre);
-    console.log("ey");
 }
