@@ -1,21 +1,62 @@
 "use strict"
 
-window.addEventListener("DOMContentLoaded", addEventListeners);
+window.addEventListener("DOMContentLoaded", real_chess);
 
+let currentPiece = null;
 
-function addEventListeners(){
-    let button = document.getElementById("MakeChessboard");
-    button.addEventListener("click", make_board);
-    let size = document.getElementById("ChessboardSize");
-    size.addEventListener("change", make_board);
-}
-
+let Pieces = {};
 
 class Piece{
     constructor(icon) {
         this.name = "Piece";
         this.icon = "";
     }
+}
+
+function is_legal_move(position) {
+    if(position.x < 0 || position.x > 7){
+        return false;
+    }
+    if(position.y < 0 || position.y > 7){
+        return false;
+    }
+    return true;
+}
+
+function show_moves(){
+    let piece = Pieces[this.id];
+    piece.startposition.removeEventListener("click", show_moves);
+    currentPiece = piece;
+    let moves = piece.possible_moves().filter(is_legal_move);
+    Pieces[this.id] = null;
+    let i = 0;
+    for(i = 0; i < moves.length; i++){
+        let move = moves[i];
+        let div = get_cell(move);
+        div.style.backgroundColor = "red";
+        div.addEventListener("click", move_here);
+    }
+}
+
+function move_here(){
+    let position = id_to_position(this.id);
+    currentPiece.move(position);
+    let i = 0;
+    let j = 0;
+    for(i = 0; i <= 7; i++){
+        for(j = 0; j <= 7; j++){
+            let div = get_cell({x: j, y: i});
+            div.removeEventListener("click", move_here);
+            if ((i + j) % 2 == 1){
+                div.style.backgroundColor = 'grey';
+            }
+            else{
+                div.style.backgroundColor = 'white';
+            }
+        }
+    }
+    Pieces[position_to_id(position)] = currentPiece;
+
 }
 
 class King{
@@ -25,40 +66,29 @@ class King{
         this.x = 4;
         this.y = 7;
         this.startposition = get_cell({x: 4, y: 7});
-        console.log(this.startposition);
         let chessButton = document.getElementById("ChessButton");
-        chessButton.addEventListener("click", () => this.king_move_forward());
+        this.startposition.textContent = this.icon;
+        this.startposition.addEventListener("click", show_moves);
     }
-    king_move_forward(){
-        console.log("ehje");
-        this.y = this.y - 1;
+    
+    move(position){
+        this.x = position.x;
+        this.y = position.y;
         this.startposition.textContent = "";
-        this.startposition = get_cell({x: this.x, y: this.y});
+        this.startposition = get_cell(position);
         this.startposition.textContent = "♚";
+        this.startposition.addEventListener("click", show_moves);
+        return position;
     }
-    king_move_backwards(){
-        this.startposition.y = this.startposition.y + 1;
-        this.startposition.textContent = "♚";
-    }
-    king_move_left(){
-        this.startposition.x = this.startposition.x - 1;
-        this.startposition.textContent = "♚";
-    }
-    king_move_right(){
-        this.startposition.x = this.startposition.x + 1;
-        this.startposition.textContent = "♚";
-    }
-}
-
-let myking = undefined;
-
-function make_board(){
-    let size = document.getElementById("ChessboardSize");
-    if (size.value == 8){
-        real_chess(size.value);
-    }
-    else{
-        chess_board(size.value);
+    possible_moves(){
+        return [{x: this.x + 1, y: this.y},
+                {x: this.x + 1, y: this.y + 1},
+                {x: this.x + 1, y: this.y - 1},
+                {x: this.x - 1, y: this.y},
+                {x: this.x - 1, y: this.y + 1},
+                {x: this.x - 1, y: this.y - 1},
+                {x: this.x, y: this.y + 1},
+                {x: this.x, y: this.y - 1}];
     }
 }
 
@@ -99,11 +129,7 @@ function real_chess(){
         boardLine.className = "boardLine";
         board.appendChild(boardLine);
     }
-    
-    myking = new King();
-    let cell = myking.startposition;
-    console.log(cell);
-    cell.textContent = "♚";
+    Pieces[position_to_id({x: 4, y: 7})] = new King();
 }
 
 function move(position){}
@@ -112,25 +138,3 @@ function get_cell(position){
     return document.getElementById(position_to_id(position));
 }
 
-function chess_board(stop){
-    let output = "";
-    let i;
-    let j;
-    let board = document.getElementById("Chessboard");
-    let pre = document.createElement("pre");
-    for(i = 0; i < stop; i++){
-        for(j = 0; j < stop; j++){
-            if((j + i) % 2 == 1){
-                output += "██";
-            }
-            else{
-                output += "  ";
-            }
-        }
-        output += "\n";
-    }
-    pre.textContent = output;
-    board.innerHTML = "";
-
-    board.appendChild(pre);
-}
