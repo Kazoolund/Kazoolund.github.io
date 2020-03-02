@@ -99,7 +99,6 @@ footer > img{
     
     width: 1em;
     height: 1em;
-    animation: PJW 1.2s linear infinite;
 }
 
 @keyframes PJW{

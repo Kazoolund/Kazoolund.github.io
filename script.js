@@ -1,10 +1,38 @@
 "use strict"
 
-window.addEventListener("DOMContentLoaded", real_chess);
+window.addEventListener("DOMContentLoaded", () => { 
+    window.addEventListener("keydown", rotate_face);
+    real_chess()});
 
 let currentPiece = null;
 
 let Pieces = {};
+
+let keypresses = [];
+
+function rotate_face(event) {
+    keypresses.push(event.key)
+    let face = null;
+    if(keypresses.slice(-3).join("") == "pjw"){
+        face = document.getElementById("pjw");
+    }
+    if(keypresses.slice(-4).join("") == "kurt"){
+        face = document.getElementById("kurt");
+    }
+    if(keypresses.slice(-5).join("") == "kappa"){
+        face = document.getElementById("kappa");
+    }
+    if(keypresses.slice(-4).join("") == "joyd"){
+        face = document.getElementById("joyd");
+    }
+    if(keypresses.slice(-9).join("") == "alexander"){
+        face = document.getElementById("alexander");
+    }
+
+    if(face != null){
+        face.style.animation = "PJW 1.2s linear infinite";
+    }
+}
 
 class Piece{
     constructor(icon) {
