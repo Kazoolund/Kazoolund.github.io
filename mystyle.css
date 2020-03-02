@@ -89,5 +89,26 @@ header{
 }
 
 footer{
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
     text-align: center;
+}
+
+footer > img{
+    
+    width: 1em;
+    height: 1em;
+    animation: PJW 1.2s linear infinite;
+}
+
+@keyframes PJW{
+    0%{
+        transform: rotate(0deg);
+    }
+    50%{
+        transform: rotate(180deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
 }
