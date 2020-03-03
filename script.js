@@ -2,7 +2,29 @@
 
 window.addEventListener("DOMContentLoaded", () => { 
     window.addEventListener("keydown", rotate_face);
-    real_chess()});
+    real_chess();
+    start_chat();
+});
+
+function start_chat(){
+    let myWebSocket = new WebSocket("ws://127.0.0.1:2345");
+    myWebSocket.onmessage = function(event){
+        console.log("Received message: " + event.data); 
+        let P = document.createElement("p");
+        P.textContent = event.data;
+        let chatBox = document.getElementById("ChatBox");
+        chatBox.appendChild(P);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    let inputField = document.getElementById("ChatInput");
+    inputField.addEventListener("keydown", (event) =>{
+        if(event.code == "Enter"){
+            let chatMessage = inputField.value;
+            myWebSocket.send(chatMessage);
+            inputField.value = "";
+        }
+    })
+}
 
 let currentPiece = null;
 
